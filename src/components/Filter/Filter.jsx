@@ -1,4 +1,5 @@
 import propTypes from "prop-types";
+import styles from "./Filter.module.css";
 
 const Filter = ({ value, onChange }) => {
     return (<label>Filter contacts:
@@ -7,6 +8,7 @@ const Filter = ({ value, onChange }) => {
                 name="filter"
                 onChange={onChange}
                 value={value}
+                className={styles.inputFilter}
               />
             </label>);
 }

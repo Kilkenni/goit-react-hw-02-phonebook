@@ -1,5 +1,6 @@
 import ContactItem from "../ContactItem";
 import propTypes from "prop-types";
+import styles from "./ContactList.module.css"
 
 const ContactList = ({ contacts, filter, onDeleteContact }) => {
     const lowCaseFilter = filter.toLowerCase();
@@ -7,16 +8,21 @@ const ContactList = ({ contacts, filter, onDeleteContact }) => {
     return (
         contacts.length === 0 ?
         <p>No contacts so far...</p> :           
-        <ul>
+        <ul className={styles.contactList}>
             {contacts.map((contact) => {
                 // console.log(`${contact.name.toLowerCase()} includes ${lowCaseFilter}: ${contact.name.toLowerCase().includes(lowCaseFilter)}`);
                 return (contact.name.toLowerCase().includes(lowCaseFilter) &&
-                    <li key={contact.id}>
+                    <li key={contact.id} className={styles.contact}>
                         <ContactItem
                             name={contact.name}
                             number={contact.number}
                         />
-                        <button type="button" onClick={() => onDeleteContact(contact.id)}>Delete contact</button>
+                        <button
+                            type="button"
+                            onClick={() => onDeleteContact(contact.id)}
+                            className={styles.btnDeleteContact}
+                        >Delete contact
+                        </button>
                     </li>);         
             })}
         </ul>        
