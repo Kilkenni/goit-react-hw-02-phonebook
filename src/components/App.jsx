@@ -1,15 +1,32 @@
 import React from "react";
 
+// import { nanoid } from "nanoid";
+
+import ContactForm from "./ContactForm";
+import Filter from "./Filter";
+import ContactList from "./ContactList";
+
 export default class App extends React.Component {
   state = {
-    contacts: [],
-    name: '',
+    contacts: [
+      {id: 'KindLady', name: 'Athene Margoulis', number: '459-12-56'},
+      {id: 'Nucl3arSnake', name: 'Francis Pritchard', number: '443-89-12'},
+      {id: 'FlyGirl', name: 'Faridah Malik', number: '645-17-79'},
+      {id: 'TyphoonMaster', name: 'Vasili Shevchenko', number: '227-91-26'},
+    ],
+    filter: '', //search filter
   }
 
-  addContact = (event) => {
-    event.preventDefault();
+  addContact = (newContact) => {
+    //check if the person already exists in contacts
+    if (this.state.contacts.some( (contact) => {
+      return contact.name === newContact.name;
+    }) ) {
+      alert(`${newContact.name} is already in contacts.`);
+      return;
+    }
+
     this.setState((currentState) => {
-      const newContact = { name: currentState.name };
       return { contacts: [...currentState.contacts, newContact] };
     });
   }
@@ -21,6 +38,8 @@ export default class App extends React.Component {
   }
 
   render() {
+    // const lowCaseFilter = this.state.filter.toLowerCase();
+
     return (
       <div
         style={{
@@ -37,29 +56,21 @@ export default class App extends React.Component {
         }}
       >
         <h1>Phonebook</h1>
-        <form action="submit" onSubmit={this.addContact}>
-          <input
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            onChange={this.onInputChange}
-          />
-
-          <button type="submit">Add contact</button>
-        </form>
+        <ContactForm
+          onSubmit={(newContact) => {this.addContact(newContact)}}
+        />
 
         <h2>Contacts</h2>
-        {this.state.contacts.length === 0 ?
-          <p>No contacts so far...</p> :
-          <ul>
-            {this.state.contacts.map((contact) => {
-              return <li key={contact.name}>
-                <p>Name: { contact.name}</p>
-              </li>;
-            })}
-          </ul>}
+
+        <Filter
+          value={this.state.filter}
+          onChange={this.onInputChange}
+        />
+
+        <ContactList
+          contacts={this.state.contacts}
+          filter={this.state.filter}
+        />
       </div>
     );
   }
