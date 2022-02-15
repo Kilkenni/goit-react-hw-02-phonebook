@@ -31,6 +31,16 @@ export default class App extends React.Component {
     });
   }
 
+  deleteContact = (contactId) => {
+    this.setState((currentState) => {
+      return {
+        contacts: currentState.contacts.filter((contact) => {
+          return contact.id !== contactId;
+        }),
+      }
+    });
+  }
+
   onInputChange = (event) => {  
     const { name, value } = event.currentTarget;
     // const inputValue = event.currentTarget.value;
@@ -70,6 +80,7 @@ export default class App extends React.Component {
         <ContactList
           contacts={this.state.contacts}
           filter={this.state.filter}
+          onDeleteContact={this.deleteContact}
         />
       </div>
     );

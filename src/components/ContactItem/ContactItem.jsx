@@ -1,4 +1,4 @@
-const ContactItem = ({ name, number }) => {
+const ContactItem = ({ name, number, onDelete }) => {
     return (<p>{name} : {number}</p>);
 }
 

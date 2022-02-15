@@ -1,10 +1,9 @@
 import ContactItem from "../ContactItem";
 import propTypes from "prop-types";
 
-const ContactList = ({ contacts, filter }) => {
+const ContactList = ({ contacts, filter, onDeleteContact }) => {
     const lowCaseFilter = filter.toLowerCase();
     
-
     return (
         contacts.length === 0 ?
         <p>No contacts so far...</p> :           
@@ -15,8 +14,9 @@ const ContactList = ({ contacts, filter }) => {
                     <li key={contact.id}>
                         <ContactItem
                             name={contact.name}
-                            number={contact.number}                   
+                            number={contact.number}
                         />
+                        <button type="button" onClick={() => onDeleteContact(contact.id)}>Delete contact</button>
                     </li>);         
             })}
         </ul>        
@@ -32,6 +32,7 @@ ContactList.propTypes = {
         })
     ).isRequired,
     filter: propTypes.string,
+    onDeleteContact: propTypes.func.isRequired,
 }
 
 export default ContactList;
