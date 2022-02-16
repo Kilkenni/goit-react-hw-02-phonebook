@@ -19,8 +19,9 @@ export default class App extends React.Component {
 
   addContact = (newContact) => {
     //check if the person already exists in contacts
+    const normalizedNewName = newContact.name.toLowerCase();
     if (this.state.contacts.some( (contact) => {
-      return contact.name === newContact.name;
+      return contact.name.toLowerCase() === normalizedNewName;
     }) ) {
       alert(`${newContact.name} is already in contacts.`);
       return;
